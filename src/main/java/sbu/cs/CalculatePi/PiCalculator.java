@@ -24,10 +24,11 @@ public class PiCalculator{
             ans = new BigDecimal("0");
             BigDecimal taghsim;
 
-            for(int i = 0; i < Math.pow(2,15); i++) {
-                taghsim = new BigDecimal("1");
-                taghsim = taghsim.divide(new BigDecimal(Integer.toString((int) (Math.pow(2,16) * k + 2*i + 1))), mc);
-                if(i%2 == 0)
+            for(int i = 2; i < Math.pow(2,15); i+=2) {
+                taghsim = new BigDecimal("4");
+                taghsim = taghsim.divide(new BigDecimal(Integer.toString((int) ((Math.pow(2,16) * k + i)
+                        * (Math.pow(2,16) * k + i+1) * (Math.pow(2,16) * k + i+2)))), mc);
+                if((i/2)%2 == 1)
                     ans = ans.add(taghsim);
                 else
                     ans = ans.subtract(taghsim);
@@ -86,7 +87,7 @@ public class PiCalculator{
         sum = sum.add(c6.ans);
         sum = sum.add(c7.ans);
         sum = sum.add(c8.ans);
-        sum = sum.multiply(new BigDecimal("4"), mc);
+        sum = sum.add(new BigDecimal("3"));
         sum = sum.setScale(floatingPoint, RoundingMode.FLOOR);
 
         long endTime   = System.currentTimeMillis();
