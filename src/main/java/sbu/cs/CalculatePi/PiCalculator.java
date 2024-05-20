@@ -22,16 +22,34 @@ public class PiCalculator{
         @Override
         public void run() {
             ans = new BigDecimal("0");
-            BigDecimal taghsim;
+            BigDecimal kasr;
 
-            for(int i = 2; i < Math.pow(2,15); i+=2) {
-                taghsim = new BigDecimal("4");
-                taghsim = taghsim.divide(new BigDecimal(Integer.toString((int) ((Math.pow(2,16) * k + i)
-                        * (Math.pow(2,16) * k + i+1) * (Math.pow(2,16) * k + i+2)))), mc);
-                if((i/2)%2 == 1)
-                    ans = ans.add(taghsim);
-                else
-                    ans = ans.subtract(taghsim);
+            for(int i = 0; i < Math.pow(2,7); i++) {
+                kasr = new BigDecimal("1");
+                BigDecimal b1 = new BigDecimal("16");
+                BigDecimal b2 = new BigDecimal("2");
+                b2 = b2.pow(7);
+                b2 = b2.multiply(new BigDecimal(Integer.toString(k)), mc);
+                b2 = b2.add(new BigDecimal(Integer.toString(i)));
+                b1 = b1.pow(Integer.parseInt(b2.toString()));
+                kasr = kasr.divide(b1, mc);
+
+                BigDecimal kasr1 = new BigDecimal("4");
+                kasr1 = kasr1.divide(b2.multiply(new BigDecimal("8")).add(new BigDecimal("1")), mc);
+                BigDecimal kasr2 = new BigDecimal("2");
+                kasr2 = kasr2.divide(b2.multiply(new BigDecimal("8")).add(new BigDecimal("4")), mc);
+                BigDecimal kasr3 = new BigDecimal("1");
+                kasr3 = kasr3.divide(b2.multiply(new BigDecimal("8")).add(new BigDecimal("5")), mc);
+                BigDecimal kasr4 = new BigDecimal("1");
+                kasr4 = kasr4.divide(b2.multiply(new BigDecimal("8")).add(new BigDecimal("6")), mc);
+
+                BigDecimal sum_4_kasr = new BigDecimal("0");
+                sum_4_kasr = sum_4_kasr.add(kasr1);
+                sum_4_kasr = sum_4_kasr.subtract(kasr2);
+                sum_4_kasr = sum_4_kasr.subtract(kasr3);
+                sum_4_kasr = sum_4_kasr.subtract(kasr4);
+
+                ans = ans.add(sum_4_kasr.multiply(kasr, mc));
             }
 
         }
@@ -87,7 +105,6 @@ public class PiCalculator{
         sum = sum.add(c6.ans);
         sum = sum.add(c7.ans);
         sum = sum.add(c8.ans);
-        sum = sum.add(new BigDecimal("3"));
         sum = sum.setScale(floatingPoint, RoundingMode.FLOOR);
 
         long endTime   = System.currentTimeMillis();
